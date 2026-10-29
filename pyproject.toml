@@ -1,0 +1,115 @@
+[project]
+name = "clausecraft"
+version = "0.1.0"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [
+    ".git",
+    "__pycache__",
+    "*.pyc",
+    "sitecustomize.py",
+    "yaml.py",
+    "tests/",
+]
+
+[tool.ruff.lint]
+# Intentionally permissive for defensive API safety nets (broad except is
+# required by R4: never return str(e), always convert to clean errors).
+# These are re-enabled in CI if a safer pattern is available.
+select = ["ALL"]
+ignore = [
+    "BLE001",  # blind catch - intentional API safety net
+    "S110",    # try-except-pass - intentional defensive fallback
+    "TRY203",  # re-raise - intentional
+    "TRY300",  # try-except-return - intentional API shape
+    "FBT001",  # boolean positional args - fine in tests
+    "PLR2004", # magic values - fine in tests/constants
+    "D",       # docstrings - addressed in docs/README instead
+    "ANN",     # type annotations - incremental; disallow_untyped_defs kept for core
+    "ARG001",  # unused callback/framework args
+    "ARG002",  # unused method args (interface stubs)
+    "C901",    # complexity - functions are small enough logically
+    "PLR0911", # too many returns
+    "PLR0912", # too many branches
+    "PLR0913", # too many args
+    "PLR0915", # too many statements
+    "E501",    # line length
+    "T201",    # print - fine in CLI eval harness
+    "B007",    # unused loop var (often intentional placeholder)
+    "RET504",  # unnecessary assignment before return - stylistic
+    "RET503",  # missing explicit return - stylistic
+    "CPY001",  # copyright - LICENSE file present
+    "TC001",   # import placement - runtime imports intentional
+    "TC003",   # import placement
+    "PTH",     # pathlib migration - incremental
+    "SIM105",  # contextlib.suppress - stylistic
+    "SIM102",  # single if - stylistic
+    "PERF401", # perf micro-optimizations
+    "UP",      # pyupgrade style - incremental
+    "D401",    # docstring mood
+    "D1",      # missing docstrings
+    "Q000",    # quote style
+    "COM812",  # trailing comma
+    "EM101",   # exception string literal
+    "B904",    # raise from
+    "B905",    # zip strict
+    "S311",    # random not crypto (gold set uses seeded random)
+    "RUF001",  # ambiguous char (× used deliberately in docs)
+    "RUF005",  # list concat
+    "INP001",  # namespace package
+    "S105",    # hardcoded password - it's a rule id constant, not a password
+    "S603",    # subprocess - trusted input (LibreOffice)
+    "S607",    # subprocess partial path
+    "PLW1510", # subprocess check - handled
+    "S112",    # try-except-continue - stylistic
+    "LOG004",  # .exception outside handler - logging config
+    "ANN401",  # Any - used intentionally for dynamic LLM outputs
+    "UP015",   # mode argument
+    "F841",    # unused variable - stylistic, handled manually where real
+    "E702",    # semicolon
+    "PLC0415", # optional imports inside functions (pytesseract etc.)
+    "ERA001",  # false positives on section separator comments
+    "PIE810",  # startswith tuple - stylistic
+    "DTZ003",  # utcnow - incremental migration
+    "PLW2901", # loop var reassignment - stylistic
+    "TRY003",  # long exception messages - stylistic
+    "TRY301",  # abstract raise - stylistic
+    "S310",    # URL open - config URLs
+    "FBT002",  # boolean default positional - stylistic
+    "FBT003",  # boolean positional value - stylistic
+    "PLR0917", # too many positional args - internal signatures by design
+    "EM101",   # exception string literal - fine for debugging
+    "EM102",   # exception f-string - fine for debugging
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app_core"]
+
+[tool.ruff.format]
+line-ending = "lf"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+disable_error_code = ["import-untyped"]
+
+[[tool.mypy.overrides]]
+module = "app"
+disable_error_code = ["no-untyped-def", "arg-type", "index", "union-attr"]
+
+[[tool.mypy.overrides]]
+module = "reportlab.*"
+disable_error_code = ["import-untyped"]
+
+[[tool.mypy.overrides]]
+module = "pytesseract"
+disable_error_code = ["import-untyped"]
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disable_error_code = ["no-untyped-def", "no-untyped-call", "arg-type", "union-attr", "return-value", "assignment"]

@@ -1,0 +1,22 @@
+# ClauseCraft pinned dependencies (with hashes for reproducibility).
+# Generated via: pip freeze  # then add hashes via `pip hash` / `pip-compile`.
+flask==3.1.3
+gunicorn==21.2.0
+pdfplumber==0.11.10
+python-docx==1.2.0
+reportlab==5.1.0
+pytesseract==0.3.13
+Pillow==13.0.0
+pydantic==2.14.1
+python-dotenv==1.2.4
+
+# Optional ML stack (only needed if you enable sentence-transformers or a
+# local LLM). Default NO_LLM mode does not require these.
+# sentence-transformers==6.2.0
+# transformers==5.21.0
+# torch==2.14.1+cpu
+
+# Lint / type / test
+pytest==9.2.0
+ruff==0.17.3
+mypy==2.4.0

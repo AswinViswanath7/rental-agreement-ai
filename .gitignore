@@ -1,0 +1,42 @@
+# ClauseCraft repository hygiene
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+.env
+.env.*
+
+# Logging / runtime
+app.log
+*.log
+uploads/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Model caches
+models/
+.huggingface/
+
+# IDE
+.vscode/
+.idea/
+
+# Build/dist
+dist/
+build/
+*.egg-info/
+
+# Original source zip (not part of the refactored repo)
+NLP-contract-summarizer-for-rental-agreements.zip
